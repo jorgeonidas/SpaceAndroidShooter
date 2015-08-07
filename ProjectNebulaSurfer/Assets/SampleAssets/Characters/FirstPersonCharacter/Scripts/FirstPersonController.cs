@@ -10,6 +10,7 @@ namespace UnitySampleAssets.Characters.FirstPerson
     {
 
         //////////////////////// exposed privates ///////////////////////
+		[SerializeField] private float lookSpeed;
         [SerializeField] private bool _isWalking;
         [SerializeField] private float walkSpeed;
         [SerializeField] private float runSpeed;
@@ -187,6 +188,7 @@ namespace UnitySampleAssets.Characters.FirstPerson
         private void GetInput(out float speed)
         {
             // Read input
+			//JORGE: aca lee el input del joistck
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
 
@@ -212,16 +214,37 @@ namespace UnitySampleAssets.Characters.FirstPerson
                 StartCoroutine(!_isWalking ? _fovKick.FOVKickUp() : _fovKick.FOVKickDown());
             }
         }
-
+		//JORGE: vamos a agregar el nuevo joistick
         private void RotateView()
         {
+			#if !MOBILE_INPUT
+			//JORGE: mouse
             Vector2 mouseInput = _mouseLook.Clamped(_yRotation, transform.localEulerAngles.y);
+			_camera.transform.localEulerAngles = new Vector3(-mouseInput.y, _camera.transform.localEulerAngles.y,
+			                                                  _camera.transform.localEulerAngles.z);
+			transform.localEulerAngles = new Vector3(0, mouseInput.x, 0);
+			#else
+			//JORGE: crossplatforminputmanager y nuestro nuevo  joistick
+			Vector2 mouseInput = new Vector2(CrossPlatformInputManager.GetAxis("HorizontalLook"),CrossPlatformInputManager.GetAxis("VerticalLook"));
+		
+           
 
-            // handle the roation round the x axis on the camera
-            _camera.transform.localEulerAngles = new Vector3(-mouseInput.y, _camera.transform.localEulerAngles.y,
-                                                             _camera.transform.localEulerAngles.z);
-            _yRotation = mouseInput.y;
-            transform.localEulerAngles = new Vector3(0, mouseInput.x, 0);
+			float camX = _camera.transform.localEulerAngles.x;
+
+			if((camX > 280 && camX <= 360) ||
+			   (camX >= 0 && camX < 80) ||
+			   (camX >= 80 && camX < 180 && mouseInput.y > 0) ||
+			   (camX > 180 && camX <= 280 && mouseInput.y < 0))
+			{
+				_camera.transform.localEulerAngles += new Vector3(-mouseInput.y * lookSpeed * .7f, _camera.transform.localEulerAngles.y,
+				                                                  _camera.transform.localEulerAngles.z);
+			}
+			// handle the roation round the x axis on the camera
+            
+			transform.localEulerAngles += new Vector3(0, mouseInput.x * lookSpeed, 0);
+			#endif
+			_yRotation = mouseInput.y;
+            
             _cameraRefocus.GetFocusPoint();
         }
 

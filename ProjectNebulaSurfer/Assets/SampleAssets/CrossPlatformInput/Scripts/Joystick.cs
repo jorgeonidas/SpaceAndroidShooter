@@ -23,7 +23,7 @@ public class Joystick : MonoBehaviour , IPointerUpHandler , IPointerDownHandler 
     private CrossPlatformInputManager.VirtualAxis horizontalVirtualAxis;               // Reference to the joystick in the cross platform input
     private CrossPlatformInputManager.VirtualAxis verticalVirtualAxis;                 // Reference to the joystick in the cross platform input
       
-    void OnEnable () {
+    void Start () {//JORGE: AL INICIALIZAR!
 
         startPos = transform.position;
         CreateVirtualAxes ();
@@ -56,23 +56,21 @@ public class Joystick : MonoBehaviour , IPointerUpHandler , IPointerDownHandler 
     }
 
 
-    public  void OnDrag(PointerEventData data) {
-
+    public  void OnDrag(PointerEventData data) {//JORGE: funcion para arrastrar el joistick
         Vector3 newPos = Vector3.zero;
 
         if (useX) {
             int delta = (int) (data.position.x - startPos.x);
-            delta = Mathf.Clamp(delta,  - MovementRange,  MovementRange);
             newPos.x = delta;
         }
 
         if (useY)
         {
             int delta = (int)(data.position.y - startPos.y);
-            delta = Mathf.Clamp(delta, -MovementRange,  MovementRange);
             newPos.y = delta;
         }
-        transform.position = new Vector3(startPos.x + newPos.x , startPos.y + newPos.y , startPos.z + newPos.z);
+		//JORGE: limitamos el movimiento del joistick a un circulo con centro en la posicion inicial
+        transform.position =Vector3.ClampMagnitude( new Vector3(newPos.x , newPos.y , newPos.z), MovementRange) + startPos ;
         UpdateVirtualAxes (transform.position);
     }
 
