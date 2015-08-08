@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void disparar(){
-		Instantiate (disparo, cañon.transform.position, cañon.transform.rotation);
+		Instantiate (disparo, cañon.transform.position, Quaternion.identity);
 	}
 
 }
