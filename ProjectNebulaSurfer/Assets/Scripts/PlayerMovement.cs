@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void movimiento(){
-		float moveHorizontal = CrossPlatformInputManager.GetAxis ("Horizontal");
-		float moveVertical = CrossPlatformInputManager.GetAxis ("Vertical");
+		float moveHorizontal = CrossPlatformInputManager.GetAxisRaw ("Horizontal");
+		float moveVertical = CrossPlatformInputManager.GetAxisRaw ("Vertical");
 		
 		Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0.0f );
 		playerRgb.velocity = movement * velocidad;
@@ -46,7 +46,6 @@ public class PlayerMovement : MonoBehaviour {
 		Instantiate (disparo, cañon.transform.position, cañon.transform.rotation);
 	}
 
-			
 }
 
 	
