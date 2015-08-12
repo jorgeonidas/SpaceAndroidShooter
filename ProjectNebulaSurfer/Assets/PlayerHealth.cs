@@ -4,10 +4,12 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviour {
 	public int hits;
 	public GameObject explosion;
+	private LevelManager manager;
 	//public GameObject enemyExplosion;
 	// Use this for initialization
 	void Start () {
-	
+		GameObject lvlManagerObj = GameObject.FindGameObjectWithTag ("GameController");
+		manager = lvlManagerObj.GetComponent<LevelManager> ();
 	}
 	
 	// Update is called once per frame
@@ -20,6 +22,8 @@ public class PlayerHealth : MonoBehaviour {
 			Destroy (other.gameObject);
 			Debug.Log(hits);
 			if( hits <= 0){
+				Debug.Log ("gameOver");
+				manager.SetGameOver();
 				Instantiate(explosion, transform.position, transform.rotation);
 				Destroy (gameObject);
 			}
@@ -27,6 +31,8 @@ public class PlayerHealth : MonoBehaviour {
 		if (other.tag == "Enemy") {
 			hits -= 1;
 			if( hits <= 0){
+				Debug.Log ("gameOver");
+				manager.SetGameOver();
 				Instantiate(explosion, transform.position, transform.rotation);
 				Destroy (gameObject);
 			}
