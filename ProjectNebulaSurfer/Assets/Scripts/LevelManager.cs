@@ -17,20 +17,30 @@ public class LevelManager : MonoBehaviour {
 	public float esperaEntrePeligro;
 	public float esperaInicial;
 	public float esperaEntreOleada;
+	public float esperaVictoria;
 	//banderas
 	bool gameOver;
 	bool missionSucces;
 	bool restartLevel;
-	//canvas values
+	//GUI
 	public Text scoreText;
+	public Text scoreText1;
+	public GameObject acomplishedText;
+	public GameObject failText;
+	public GameObject finalScore;
+	public GameObject botonRestart; 
+	public GameObject botonContinuar;
+	public GameObject botonFire;
+	public GameObject joistick;
+
 
 	// Use this for initialization
 	void Start () {
 		score = 0;
 		gameOver = false;
 		numOleadas = oleadas.Length;
-		Debug.Log ("oleadas " + numOleadas);
-		Debug.Log ("cantidad de prefabs " + peligros.Length);
+		//Debug.Log ("oleadas " + numOleadas);
+		//Debug.Log ("cantidad de prefabs " + peligros.Length);
 		StartCoroutine (SpawnOleadas ());
 		updateScore ();
 	}
@@ -42,6 +52,9 @@ public class LevelManager : MonoBehaviour {
 		while (j < numOleadas && !gameOver ) {
 			 //
 			for (int i = 0; i < oleadas[j]; i++) {
+				if(gameOver){
+					break;
+				}
 				Vector3 spawnPosition = new Vector2 (spawnValues.x, Random.Range (-spawnValues.y, spawnValues.y));
 				Quaternion spawnRotation = Quaternion.identity;//sin rotacion
 				Instantiate (peligros[Random.Range(0,peligros.Length)], spawnPosition, spawnRotation);
@@ -51,11 +64,16 @@ public class LevelManager : MonoBehaviour {
 			j++;
 			yield return new WaitForSeconds (esperaEntreOleada);//tiempo entre oleadas
 		}
-		//yield return new WaitForSeconds (oleadas [oleadas.Length-1] );
+		//yield return new WaitForSeconds (oleadas [j-1]+10 );
 		if (!gameOver) {
-			Debug.Log ("ya pasaron las oleadas");
+			yield return new WaitForSeconds (esperaVictoria);
+			Debug.Log ("MissionSucces");//si gano
+			MisionAcomplished();
+
 		} else {
-			Debug.Log("Mission Fail!");
+			Debug.Log("Mission Fail!");//si pierdo
+			MissionFail();
+
 		}
 	}
 
@@ -66,10 +84,26 @@ public class LevelManager : MonoBehaviour {
 	
 	void updateScore(){
 		scoreText.text = score.ToString();
+		scoreText1.text = score.ToString ();
 	}
 
 	public void SetGameOver(){
 		gameOver = true;
 	}
-
+	public void MisionAcomplished(){
+		acomplishedText.SetActive (true);
+		finalScore.SetActive(true);
+		enableButtons ();
+	}
+	public void MissionFail(){
+		failText.SetActive (true);
+		finalScore.SetActive(true);
+		enableButtons ();
+	}
+	void enableButtons(){
+		botonContinuar.SetActive (true);
+		botonRestart.SetActive (true);
+		botonFire.SetActive (false);
+		joistick.SetActive (false);
+	}
 }
