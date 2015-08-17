@@ -2,14 +2,17 @@
 using System.Collections;
 
 public class PauseManager : MonoBehaviour {
-	private bool gamePaused;
+	public bool gamePaused;
 	public RectTransform joistick;
 	public GameObject hudCanvas;
+	public GameObject pauseCanvas;
 	public Vector2 originalPos;
 	//Sprite joistckSprite;
 	// Use this for initialization
 	void Start () {
 		gamePaused = false;
+		pauseCanvas.SetActive (gamePaused);
+		Time.timeScale = 1;
 		originalPos = joistick.position;
 	}
 	
@@ -19,25 +22,30 @@ public class PauseManager : MonoBehaviour {
 			gamePaused = !gamePaused;
 			
 			if(gamePaused == true){
-				Time.timeScale = 0;
-				gamePaused = true;
-				//PauseMenu.SetActive(true);
-				joistick.position = new Vector2(originalPos.x,-230);
-				hudCanvas.SetActive(!gamePaused);
-
+				PauseGame();
 			}
 			if(gamePaused == false){
-				Time.timeScale = 1;
-				gamePaused = false;
-				//PauseMenu.SetActive(false);
-				//SalirDialog.SetActive(false);
-				joistick.position = originalPos;
-				hudCanvas.SetActive(!gamePaused);
+				ResumeGame();
 			}
 			
 		}
 	}
+
 	public void setPause(bool b){
-		gamePaused = b;
-	}	
+		gamePaused = b ;
+	}
+	//funciones para pausar y reanudar juego
+	public void PauseGame(){
+		Time.timeScale = 0;
+		joistick.position = new Vector2(originalPos.x,-230);
+		hudCanvas.SetActive(false);
+		pauseCanvas.SetActive (true);
+	}
+	public void ResumeGame(){
+		Time.timeScale = 1;
+		joistick.position = originalPos;
+		hudCanvas.SetActive(true);
+		pauseCanvas.SetActive (false);
+	}
+
 }
