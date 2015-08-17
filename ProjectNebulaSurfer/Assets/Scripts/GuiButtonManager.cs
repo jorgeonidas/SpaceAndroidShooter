@@ -20,12 +20,14 @@ public class GuiButtonManager : MonoBehaviour {
 	//activa el dialogo si vas a resetear el nivel
 	public void AskForRestart(){
 		quitOrRestart = true;
+		pauseManager.enabled = false;
 		pauseMenuCanvas.SetActive (false);
 		ConfirmDialogCanvas.SetActive (true);
 	}
 	//activas el dialogo si vas a salir del nivel
 	public void AskForQuit(){
 		quitOrRestart = false;
+		pauseManager.enabled = false;
 		pauseMenuCanvas.SetActive (false);
 		ConfirmDialogCanvas.SetActive (true);
 	}
@@ -37,6 +39,7 @@ public class GuiButtonManager : MonoBehaviour {
 		}
 	}
 	public void OnPushNo(){
+		pauseManager.enabled = true;
 		ConfirmDialogCanvas.SetActive (false);
 		pauseMenuCanvas.SetActive (true);
 	}

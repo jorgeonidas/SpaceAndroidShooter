@@ -32,15 +32,17 @@ public class LevelManager : MonoBehaviour {
 	public GameObject botonContinuar;
 	public GameObject botonFire;
 	public GameObject joistick;
-
+	//pause manager para activarlo y desactivarlo
+	public PauseManager pauseManager;
 
 	// Use this for initialization
 	void Start () {
 		score = 0;
 		gameOver = false;
 		numOleadas = oleadas.Length;
-		//Debug.Log ("oleadas " + numOleadas);
-		//Debug.Log ("cantidad de prefabs " + peligros.Length);
+
+		pauseManager.enabled = true;//pause manager funciona
+
 		StartCoroutine (SpawnOleadas ());
 		updateScore ();
 	}
@@ -91,11 +93,13 @@ public class LevelManager : MonoBehaviour {
 		gameOver = true;
 	}
 	public void MisionAcomplished(){
+		pauseManager.enabled = false; //desabilitar pause manager 
 		acomplishedText.SetActive (true);
 		finalScore.SetActive(true);
 		enableButtons ();
 	}
 	public void MissionFail(){
+		pauseManager.enabled = false; //desabilitar pause manager 
 		failText.SetActive (true);
 		finalScore.SetActive(true);
 		enableButtons ();
