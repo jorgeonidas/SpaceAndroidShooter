@@ -17,7 +17,12 @@ public class PlayerMovement : MonoBehaviour {
 	public GameObject cañon;
 	public GameObject disparo;
 	// Use this for initialization
+	//ataque area de efecto
+	private bool aoeReady;
+	public GameObject aoeButton;
+	public GameObject aoeVfx;
 	void Start () {
+		aoeReady = false;
 		playerRgb = GetComponent<Rigidbody2D> ();
 	}
 	
@@ -53,7 +58,15 @@ public class PlayerMovement : MonoBehaviour {
 	public void disparar(){
 		Instantiate (disparo, cañon.transform.position, Quaternion.identity);
 	}
-
+	public void AoeReady(){
+		aoeReady = true;
+		aoeButton.SetActive (true);
+	}
+	public void fireAoe(){
+		Instantiate(aoeVfx, transform.position, transform.rotation);
+		aoeReady = false;
+		aoeButton.SetActive (false);
+	}
 }
 
 	

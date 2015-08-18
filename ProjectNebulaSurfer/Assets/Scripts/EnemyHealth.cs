@@ -30,6 +30,11 @@ public class EnemyHealth : MonoBehaviour {
 			//Destroy (other.gameObject);
 			Destroy (gameObject);
 		}
+		if (other.tag == "AOE") {
+			manager.addsScore(ScorePoints);
+			Instantiate(explosion, transform.position, transform.rotation);
+			Destroy (gameObject);
+		}
 	}
 
 }

@@ -11,11 +11,14 @@ public class PlayerHealth : MonoBehaviour {
 	private bool shielded;
 	public int shieldHits;
 	private int currShieldHits;
+	//aoe
+	PlayerMovement playerMovScript;
 
 	void Start () {
 		shielded = false;
 		GameObject lvlManagerObj = GameObject.FindGameObjectWithTag ("GameController");
 		manager = lvlManagerObj.GetComponent<LevelManager> ();
+		playerMovScript = GetComponent<PlayerMovement> ();
 	}
 	
 	// Update is called once per frame
@@ -56,6 +59,9 @@ public class PlayerHealth : MonoBehaviour {
 			energyShield.SetActive(true);
 			currShieldHits = shieldHits;
 			shielded = true;//el escudo esta activado
+		}
+		if (other.tag == "PowerUpAoe") {
+			playerMovScript.AoeReady(); // activo el boton de area de efecto
 		}
 	
 	}
