@@ -28,6 +28,7 @@ public class PlayerHealth : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other){
 		if(other.tag == "EnemyShot"){
 			hits -= 1;
+			playerMovScript.updateCanonCount(-1);
 			Destroy (other.gameObject);
 			Debug.Log(hits);
 			if( hits <= 0){
@@ -38,9 +39,11 @@ public class PlayerHealth : MonoBehaviour {
 			}
 		}
 		if (other.tag == "Enemy") {
+			playerMovScript.updateCanonCount(-1);
 			if (shielded == false){
 				hits -= 1;
 				if (hits <= 0) {
+					playerMovScript.enabled = false;
 					Debug.Log ("gameOver");
 					manager.SetGameOver ();
 					Instantiate (explosion, transform.position, transform.rotation);
@@ -63,6 +66,11 @@ public class PlayerHealth : MonoBehaviour {
 		if (other.tag == "PowerUpAoe") {
 			playerMovScript.AoeReady(); // activo el boton de area de efecto
 		}
+
+		if(other.tag == "PowerUpCanon"){
+			playerMovScript.updateCanonCount(1);
+		}
+
 	
 	}
 }
