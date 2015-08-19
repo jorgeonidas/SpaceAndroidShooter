@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 	//prefabs a spawmnear y posicion
-	public GameObject [] peligros; //el tamaño del array se asginara en el inspector
+	public GameObject [] peligros;
+	public GameObject[] powerUps;//el tamaño del array se asginara en el inspector
 	public Vector2 spawnValues;
 	//olas y sus cantidades
 	public int [] oleadas; 
@@ -57,16 +58,16 @@ public class LevelManager : MonoBehaviour {
 				if(gameOver){
 					break;
 				}
-				Vector3 spawnPosition = new Vector2 (spawnValues.x, Random.Range (-spawnValues.y, spawnValues.y));
+				Vector3 spawnPosition = new Vector2 ( spawnValues.x,Random.Range (-spawnValues.y, spawnValues.y) );
 				Quaternion spawnRotation = Quaternion.identity;//sin rotacion
-				Instantiate (peligros[Random.Range(0,peligros.Length)], spawnPosition, spawnRotation);
+				Instantiate (peligros[Mathf.Abs(Random.Range(0,peligros.Length))], spawnPosition, spawnRotation);
 				yield return new WaitForSeconds (esperaEntrePeligro);//tiempo entre asteroides
 			}
 			//
 			j++;
 			yield return new WaitForSeconds (esperaEntreOleada);//tiempo entre oleadas
 		}
-		//yield return new WaitForSeconds (oleadas [j-1]+10 );
+		//
 		if (!gameOver) {
 			yield return new WaitForSeconds (esperaVictoria);
 			Debug.Log ("MissionSucces");//si gano

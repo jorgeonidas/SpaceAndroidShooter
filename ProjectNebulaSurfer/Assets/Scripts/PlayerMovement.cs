@@ -72,8 +72,8 @@ public class PlayerMovement : MonoBehaviour {
 		} else if (canonCount == 4) {
 				Instantiate (disparo, cañon3.transform.position, Quaternion.identity);
 				Instantiate (disparo, cañon2.transform.position, Quaternion.identity);
-				Instantiate (disparo, cañon1.transform.position, Quaternion.Euler(Quaternion.identity.x,Quaternion.identity.y,10));
-				Instantiate (disparo, cañon.transform.position, Quaternion.Euler(Quaternion.identity.x,Quaternion.identity.y,-10));
+				Instantiate (disparo, cañon1.transform.position, Quaternion.Euler(Quaternion.identity.x,Quaternion.identity.y,5));
+				Instantiate (disparo, cañon.transform.position, Quaternion.Euler(Quaternion.identity.x,Quaternion.identity.y,-5));
 		}
 		
 	}
