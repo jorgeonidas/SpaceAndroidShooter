@@ -23,9 +23,11 @@ public class EnemyHealth : MonoBehaviour {
 			if( hits <= 0){
 				manager.addsScore(ScorePoints);
 				Instantiate(explosion, transform.position, transform.rotation);
-				if(Random.value < probability){//1 - probabilty = probabilidad: ejem 1 - 0.2 = 0.8
+				//spawnear item
+				if(Random.value < probability){//p = 0,1, 10% de probabilidad 
 					Instantiate(powerUp,transform.position,Quaternion.identity);
 				}
+
 				Destroy (gameObject);
 			}
 		}
