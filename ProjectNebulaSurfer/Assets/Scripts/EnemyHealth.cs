@@ -13,7 +13,7 @@ public class EnemyHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameObject lvlManagerObj = GameObject.FindGameObjectWithTag ("GameController");
-		manager = lvlManagerObj.GetComponent<LevelManager> ();
+		manager = lvlManagerObj.GetComponent<LevelManager> (); //habilitar y deshabilitar
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
@@ -30,10 +30,11 @@ public class EnemyHealth : MonoBehaviour {
 			}
 		}
 		if (other.tag == "Player") {
-			Instantiate(explosion, transform.position, transform.rotation);
-			//Instantiate(playerExplosion, transform.position, transform.rotation);
-			//Destroy (other.gameObject);
-			Destroy (gameObject);
+			hits -= 1;
+			if( hits <= 0){
+				Instantiate(explosion, transform.position, transform.rotation);
+				Destroy (gameObject);
+			}
 		}
 		if (other.tag == "AOE") {
 			manager.addsScore(ScorePoints);

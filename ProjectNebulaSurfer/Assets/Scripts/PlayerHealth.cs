@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour {
 	void Start () {
 		shielded = false;
 		GameObject lvlManagerObj = GameObject.FindGameObjectWithTag ("GameController");
-		manager = lvlManagerObj.GetComponent<LevelManager> ();
+		manager = lvlManagerObj.GetComponent<LevelManager> (); //level manager habilitar o desabilitar
 		playerMovScript = GetComponent<PlayerMovement> ();
 	}
 	
@@ -56,6 +56,12 @@ public class PlayerHealth : MonoBehaviour {
 					energyShield.SetActive(false);
 				}
 			}
+		}
+		if (other.tag == "HeavyEnemy") {
+			//morir ipso facto
+			manager.SetGameOver ();
+			Instantiate (explosion, transform.position, transform.rotation);
+			Destroy (gameObject);
 		}
 		//aca detectaremos cada powerup y lo instanciaremos
 		if (other.tag == "PowerUpShield") {
