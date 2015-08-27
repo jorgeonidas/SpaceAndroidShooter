@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour {
 	//prefabs a spawmnear y posicion
 	public GameObject [] peligros;
-	public GameObject[] powerUps;//el tamaño del array se asginara en el inspector
+	//public GameObject[] powerUps;//el tamaño del array se asginara en el inspector
 	public Vector2 spawnValues;
 	//olas y sus cantidades
 	public int [] oleadas; 

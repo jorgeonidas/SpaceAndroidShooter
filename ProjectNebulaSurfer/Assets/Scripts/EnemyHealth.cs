@@ -4,16 +4,21 @@ using System.Collections;
 public class EnemyHealth : MonoBehaviour {
 	public int hits;
 	public GameObject explosion;
-	public GameObject powerUp;
+	//public GameObject powerUp;
 	public int ScorePoints;
 	private LevelManager manager;
-	public float probability;// de 0.1 a 1
+	private ItemSpawnManager itemManager;
+	//public float probability;// de 0.1 a 1
 	//public GameObject playerExplosion;
 
 	// Use this for initialization
 	void Start () {
 		GameObject lvlManagerObj = GameObject.FindGameObjectWithTag ("GameController");
 		manager = lvlManagerObj.GetComponent<LevelManager> (); //habilitar y deshabilitar
+
+		//item spawner
+		GameObject itemManagerObj = GameObject.FindGameObjectWithTag("ItemManager");
+		itemManager = itemManagerObj.GetComponent<ItemSpawnManager> ();
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
@@ -24,10 +29,11 @@ public class EnemyHealth : MonoBehaviour {
 				manager.addsScore(ScorePoints);
 				Instantiate(explosion, transform.position, transform.rotation);
 				//spawnear item
-				if(Random.value < probability){//p = 0,1, 10% de probabilidad 
+				itemManager.GetEnemyLastPos(transform);
+				itemManager.intantiatePowerUps();
+				/*if(Random.value < probability){//p = 0,1, 10% de probabilidad 
 					Instantiate(powerUp,transform.position,Quaternion.identity);
-				}
-
+				}*/
 				Destroy (gameObject);
 			}
 		}

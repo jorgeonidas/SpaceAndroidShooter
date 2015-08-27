@@ -27,15 +27,24 @@ public class PlayerHealth : MonoBehaviour {
 	}
 	void OnTriggerEnter2D (Collider2D other){
 		if(other.tag == "EnemyShot"){
-			hits -= 1;
+
 			playerMovScript.updateCanonCount(-1);
 			Destroy (other.gameObject);
 			Debug.Log(hits);
-			if( hits <= 0){
-				Debug.Log ("gameOver");
-				manager.SetGameOver();
-				Instantiate(explosion, transform.position, transform.rotation);
-				Destroy (gameObject);
+			if (shielded == false){
+				hits -= 1;
+				if( hits <= 0){
+					Debug.Log ("gameOver");
+					manager.SetGameOver();
+					Instantiate(explosion, transform.position, transform.rotation);
+					Destroy (gameObject);
+				}
+			}else{
+				currShieldHits -= 1;
+				if(currShieldHits <= 0){
+					shielded = false; // se desactiva el escudo
+					energyShield.SetActive(false);
+				}
 			}
 		}
 		if (other.tag == "Enemy") {

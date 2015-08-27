@@ -79,12 +79,14 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	public void AoeReady(){
 		aoeReady = true;
-		aoeButton.SetActive (true);
+		aoeButton.SetActive (aoeReady);
+		Debug.Log ("aoe ready");
 	}
 	public void fireAoe(){
 		Instantiate(aoeVfx, transform.position, transform.rotation);
 		aoeReady = false;
-		aoeButton.SetActive (false);
+		aoeButton.SetActive (aoeReady);
+		Debug.Log ("aoe fired");
 	}
 	public void updateCanonCount(int c){
 		canonCount += c;
