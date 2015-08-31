@@ -31,13 +31,20 @@ public class LevelManager : MonoBehaviour {
 	public GameObject finalScore;
 	public GameObject botonRestart; 
 	public GameObject botonContinuar;
+	public GameObject botonToMainMenu;
 	public GameObject botonFire;
 	public GameObject joistick;
 	//pause manager para activarlo y desactivarlo
 	public PauseManager pauseManager;
-
+	//para el lvl unlocker
+	protected string currentLevel;
+	protected int worldIndex;
+	protected int levelIndex;
+	//Level1.1, level1.2 y asi sucecivamente
 	// Use this for initialization
 	void Start () {
+		currentLevel = Application.loadedLevelName;//nivel actual para comparar
+		Debug.Log (currentLevel);
 		score = 0;
 		gameOver = false;
 		numOleadas = oleadas.Length;
@@ -46,6 +53,7 @@ public class LevelManager : MonoBehaviour {
 
 		StartCoroutine (SpawnOleadas ());
 		updateScore ();
+		//Debug.Log (Application.loadedLevelName + "score" + PlayerPrefs.GetInt(Application.loadedLevelName + "score"));
 	}
 	
 
@@ -72,6 +80,8 @@ public class LevelManager : MonoBehaviour {
 			yield return new WaitForSeconds (esperaVictoria);
 			Debug.Log ("MissionSucces");//si gano
 			MisionAcomplished();
+			UnlockLevels ();
+			//saveScore();
 
 		} else {
 			Debug.Log("Mission Fail!");//si pierdo
@@ -106,9 +116,42 @@ public class LevelManager : MonoBehaviour {
 		enableButtons ();
 	}
 	void enableButtons(){
-		botonContinuar.SetActive (true);
+		if(!gameOver)
+			botonContinuar.SetActive (true);
+
 		botonRestart.SetActive (true);
+		botonToMainMenu.SetActive (true);
 		botonFire.SetActive (false);
 		joistick.SetActive (false);
 	}
+
+	protected void  UnlockLevels (){
+		//set the playerprefs value of next level to 1 to unlock
+		Debug.Log ("aca");
+		for(int i = 0; i < LockLevel.worlds; i++){
+			for(int j = 1; j < LockLevel.levels; j++){
+				Debug.Log("Level"+(i+1).ToString() +"." +j.ToString());
+				if(currentLevel == "Level"+(i+1).ToString() +"." +j.ToString()){//reviso en PlayerPref mi nivel actual y desbloque el siguiente asginando 1
+					worldIndex  = (i+1);
+					levelIndex  = (j+1);
+					//si lvl acutual Level1.1 voy a desbloquear Level1.2
+					PlayerPrefs.SetInt("level"+worldIndex.ToString() +":" +levelIndex.ToString(),1);
+					Debug.Log(PlayerPrefs.GetInt("level"+worldIndex.ToString() +":" +levelIndex.ToString()));
+					break;
+				}
+			}
+		}
+		//load the World1 level 
+		//Application.LoadLevel("World1");
+	}
+
+	//salvaremos el score si es el mas alto
+	/*
+	void saveScore(){
+		if(score >=  PlayerPrefs.GetInt(Application.loadedLevelName + "score" )){
+			Debug.Log("NEW RECORD!!");
+			PlayerPrefs.SetInt(Application.loadedLevelName + "score",score);
+		}
+	}
+	*/
 }

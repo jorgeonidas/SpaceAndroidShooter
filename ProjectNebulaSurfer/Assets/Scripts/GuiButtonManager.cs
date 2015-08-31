@@ -35,13 +35,20 @@ public class GuiButtonManager : MonoBehaviour {
 		if (quitOrRestart) {
 			Application.LoadLevel (Application.loadedLevel);
 		} else {
-			Application.Quit();
+			ToMainMenu();
 		}
 	}
 	public void OnPushNo(){
 		pauseManager.enabled = true;
 		ConfirmDialogCanvas.SetActive (false);
 		pauseMenuCanvas.SetActive (true);
+	}
+	public void ToMainMenu(){
+		Application.LoadLevel ("World1");
+	}
+	public void loadNextLvl(){
+		int i = Application.loadedLevel;
+		Application.LoadLevel (i + 1);
 	}
 
 }
