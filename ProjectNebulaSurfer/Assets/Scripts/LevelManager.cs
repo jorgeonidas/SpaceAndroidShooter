@@ -45,6 +45,8 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		currentLevel = Application.loadedLevelName;//nivel actual para comparar
 		Debug.Log (currentLevel);
+		Debug.Log (PlayerPrefs.GetInt ("Score" + Application.loadedLevelName));
+		Debug.Log ("Score" + Application.loadedLevelName);
 		score = 0;
 		gameOver = false;
 		numOleadas = oleadas.Length;
@@ -81,7 +83,7 @@ public class LevelManager : MonoBehaviour {
 			Debug.Log ("MissionSucces");//si gano
 			MisionAcomplished();
 			UnlockLevels ();
-			//saveScore();
+			saveScore();
 
 		} else {
 			Debug.Log("Mission Fail!");//si pierdo
@@ -146,12 +148,11 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	//salvaremos el score si es el mas alto
-	/*
 	void saveScore(){
-		if(score >=  PlayerPrefs.GetInt(Application.loadedLevelName + "score" )){
+		if(score >=  PlayerPrefs.GetInt("Score" + Application.loadedLevelName)){
 			Debug.Log("NEW RECORD!!");
-			PlayerPrefs.SetInt(Application.loadedLevelName + "score",score);
+			PlayerPrefs.SetInt("Score" + Application.loadedLevelName,score);
 		}
 	}
-	*/
+
 }

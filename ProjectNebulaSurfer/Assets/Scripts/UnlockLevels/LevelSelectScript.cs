@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class LevelSelectScript : MonoBehaviour {
 	
 	private int worldIndex;   
-	private int levelIndex;   
-	
+	private int levelIndex;
+
+	GameObject maxScoreObj;
+	Text MaxScore;
+
+
+
 	void  Start (){
 		//loop thorugh all the worlds
 		for(int i = 1; i <= LockLevel.worlds; i++){
 			if(Application.loadedLevelName == "World"+i){
 				worldIndex = i;
-				CheckLockedLevels(); 
+				CheckLockedLevels();
+				checkScores();
 			}
 		}
 	}
@@ -29,7 +36,17 @@ public class LevelSelectScript : MonoBehaviour {
 			if((PlayerPrefs.GetInt("level"+worldIndex.ToString() +":" +levelIndex.ToString()))==1){
 				GameObject.Find("LockedLevel"+(j+1)).active = false;
 				Debug.Log ("Unlocked");
+
 			}
+		}
+	}
+	void checkScores(){
+		for (int i = 1; i <= LockLevel.levels; i++) {
+			maxScoreObj = GameObject.Find("MaxScoreLvl"+(i));
+			MaxScore = maxScoreObj.GetComponent<Text>();
+			Debug.Log("ScoreLevel"+ worldIndex.ToString() +"." +i);
+			Debug.Log(PlayerPrefs.GetInt("ScoreLevel"+ worldIndex.ToString() +"." +i));
+			MaxScore.text = PlayerPrefs.GetInt("ScoreLevel"+ worldIndex.ToString() +"." +i.ToString()).ToString();
 		}
 	}
 }

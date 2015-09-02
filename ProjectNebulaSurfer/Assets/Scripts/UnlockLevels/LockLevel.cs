@@ -5,7 +5,7 @@ public class LockLevel : MonoBehaviour {
 	
 	
 	public static int worlds = 1; //number of worlds
-	public static int levels = 8; //number of levels
+	public static int levels = 3; //number of levels
 	
 	private int worldIndex;   
 	private int levelIndex;   
@@ -26,6 +26,9 @@ public class LockLevel : MonoBehaviour {
 				//create a PlayerPrefs of that particular level and world and set it's to 0, if no key of that name exists
 				if(!PlayerPrefs.HasKey("level"+worldIndex.ToString() +":" +levelIndex.ToString())){
 					PlayerPrefs.SetInt("level"+worldIndex.ToString() +":" +levelIndex.ToString(),0);
+				}
+				if(!PlayerPrefs.HasKey("ScoreLevel"+ worldIndex.ToString() +"." +j.ToString())){
+					PlayerPrefs.SetInt("ScoreLevel" + worldIndex.ToString() +"." +j.ToString(),0);
 				}
 				
 			}

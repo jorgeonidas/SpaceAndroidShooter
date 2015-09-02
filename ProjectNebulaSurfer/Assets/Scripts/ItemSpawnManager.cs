@@ -8,16 +8,7 @@ public class ItemSpawnManager : MonoBehaviour {
 	public GameObject PowerUpAoe;
 
 	private Transform enemyLastPos;
-	/*
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	*/
+
 	public void GetEnemyLastPos(Transform et){
 		enemyLastPos = et;
 		Debug.Log ("ultima pos enemigo: " + et);
