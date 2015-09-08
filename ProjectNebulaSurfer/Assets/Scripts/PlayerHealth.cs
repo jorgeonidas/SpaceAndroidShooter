@@ -35,6 +35,7 @@ public class PlayerHealth : MonoBehaviour {
 				hits -= 1;
 				if( hits <= 0){
 					Debug.Log ("gameOver");
+					playerMovScript.enabled = false;
 					manager.SetGameOver();
 					Instantiate(explosion, transform.position, transform.rotation);
 					Destroy (gameObject);
@@ -68,6 +69,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 		if (other.tag == "HeavyEnemy") {
 			//morir ipso facto
+			playerMovScript.enabled = false;
 			manager.SetGameOver ();
 			Instantiate (explosion, transform.position, transform.rotation);
 			Destroy (gameObject);

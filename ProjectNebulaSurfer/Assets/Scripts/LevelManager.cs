@@ -66,6 +66,7 @@ public class LevelManager : MonoBehaviour {
 			 //
 			for (int i = 0; i < oleadas[j]; i++) {
 				if(gameOver){
+					botonFire.SetActive(false);
 					break;
 				}
 				Vector3 spawnPosition = new Vector2 ( spawnValues.x,Random.Range (-spawnValues.y, spawnValues.y) );

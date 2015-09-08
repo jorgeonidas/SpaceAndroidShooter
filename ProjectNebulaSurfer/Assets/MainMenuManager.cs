@@ -18,7 +18,8 @@ public class MainMenuManager : MonoBehaviour {
 			}
 			if(levelSelectCanvas.activeSelf){
 				Debug.Log("estoy sleccion de nivel");
-				startCanvas.SetActive (true);
+				//startCanvas.SetActive (true);
+				QuitCanvas.SetActive(true);
 				levelSelectCanvas.SetActive (false);
 			}
 		}
@@ -32,6 +33,11 @@ public class MainMenuManager : MonoBehaviour {
 	}
 	public void OnPushNo(){
 		QuitCanvas.SetActive(false);
-		startCanvas.SetActive(true);
+		if (Application.loadedLevelName == "World1") {
+			levelSelectCanvas.SetActive(true);
+		}
+		if (Application.loadedLevelName == "Title") {
+			startCanvas.SetActive (true);
+		}
 	}
 }
