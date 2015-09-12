@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 		#if UNITY_STANDALONE || UNITY_WEBPLAYER
 		float moveHorizontal = Input.GetAxis("Horizontal");
 		float moveVertical = Input.GetAxis("Vertical");
-		if(Input.GetButtonDown("Fire1"){
+		if(Input.GetButtonDown("Fire1")){
 			disparar();
 		}
 		//cuando estoy en android

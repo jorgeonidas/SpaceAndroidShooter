@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour {
 	public GameObject botonToMainMenu;
 	public GameObject botonFire;
 	public GameObject joistick;
+	public GameObject newRecordText;
 	//pause manager para activarlo y desactivarlo
 	public PauseManager pauseManager;
 	//para el lvl unlocker
@@ -152,6 +153,7 @@ public class LevelManager : MonoBehaviour {
 	void saveScore(){
 		if(score >=  PlayerPrefs.GetInt("Score" + Application.loadedLevelName)){
 			Debug.Log("NEW RECORD!!");
+			newRecordText.SetActive(true);
 			PlayerPrefs.SetInt("Score" + Application.loadedLevelName,score);
 		}
 	}
