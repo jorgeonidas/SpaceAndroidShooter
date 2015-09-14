@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ItemSpawnManager : MonoBehaviour {
@@ -15,24 +15,23 @@ public class ItemSpawnManager : MonoBehaviour {
 	}
 
 	public void intantiatePowerUps(){
-
-		//disparo mejorado
-		if(Random.value > 0.85) //%15 percent chance (1-0.85 is 0.15)
-		{//code here
-			Instantiate (PowerUpCañon, enemyLastPos.position, Quaternion.identity);
-			return;
-		}
-		//aoe
-		if(Random.value > 0.95) //%5 percent chance (1 - 0.95 is 0.05)
-		{ //code here
-			Instantiate (PowerUpAoe, enemyLastPos.position, Quaternion.identity);
-			return;
-		}
-		//escudo
-		if(Random.value > 0.9) //%10 percent chance (1 - 0.9 is 0.1)
-		{ //code here
-			Instantiate (PowerUpShield, enemyLastPos.position, Quaternion.identity);
-			return;
+		//probando
+		if (Random.value > 0.5) {
+			//disparo mejorado
+			if (Random.value > 0.85) { //%15 percent chance (1-0.85 is 0.15)//code here
+				Instantiate (PowerUpCañon, enemyLastPos.position, Quaternion.identity);
+				return;
+			}
+			//aoe
+			if (Random.value > 0.95) { //%5 percent chance (1 - 0.95 is 0.05) //code here
+				Instantiate (PowerUpAoe, enemyLastPos.position, Quaternion.identity);
+				return;
+			}
+			//escudo
+			if (Random.value > 0.9) { //%10 percent chance (1 - 0.9 is 0.1) //code here
+				Instantiate (PowerUpShield, enemyLastPos.position, Quaternion.identity);
+				return;
+			}
 		}
 	}
 }
