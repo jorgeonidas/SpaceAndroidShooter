@@ -5,17 +5,21 @@ public class EnemyFiring : MonoBehaviour {
 
 	public GameObject disparo;
 	public Transform cañonPos;
-	public int tiempoEntreTiros;
+	public float maximo,minimo;
 
 	void Start () {
-		//InvokeRepeating ("disparar", 0f,Random.Range(1,5));
-		StartCoroutine (disparar ());
+		//Invoke ("disparar", 0f,Random.Range(1,5));
+		Invoke ("disparar",Random.Range(1, 2));
 	}
 
-	IEnumerator disparar(){
-		while (true) {
-			Instantiate (disparo, cañonPos.position, cañonPos.rotation);
-			yield return new WaitForSeconds (tiempoEntreTiros);
-		}
+	void disparar(){
+		//while (true) {
+		float retraso = Random.Range(minimo, maximo);
+			// do you code
+		Instantiate (disparo, cañonPos.position, cañonPos.rotation);
+
+		Invoke("disparar", retraso);
+			//yield return new WaitForSeconds (tiempoEntreTiros);
+		//}
 	}
 }
