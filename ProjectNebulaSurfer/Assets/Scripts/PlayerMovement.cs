@@ -26,9 +26,15 @@ public class PlayerMovement : MonoBehaviour {
 	private bool aoeReady;
 	public GameObject aoeButton;
 	public GameObject aoeVfx;
+	//
+	bool disparando;
+	public float firerate;
+	float nextFire;
+
 	void Start () {
 		//canonCount = 4; // solo cañon disponible
 		aoeReady = false;
+		disparando = false;
 		playerRgb = GetComponent<Rigidbody2D> ();
 		//cañones desactivados
 	}
@@ -36,6 +42,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		movimiento ();
+		disparar (disparando);
 	}
 
 	public void movimiento(){
@@ -62,21 +69,28 @@ public class PlayerMovement : MonoBehaviour {
 
 	}
 
-	public void disparar(){
-		//linea recta
-		if (canonCount <= 1) { 
-			Instantiate (disparo, cañon3.transform.position, Quaternion.identity);
-		} else if (canonCount <= 3) {
-			Instantiate (disparo, cañon3.transform.position, Quaternion.identity);
-			Instantiate (disparo, cañon2.transform.position, Quaternion.identity);
-		} else if (canonCount == 4) {
+	public void disparar(bool disparando){
+
+		if(disparando == true && Time.time > nextFire){
+			nextFire = Time.time + firerate;
+			if (canonCount <= 1) { 
+				Instantiate (disparo, cañon3.transform.position, Quaternion.identity);
+			} else if (canonCount <= 3) {
+				Instantiate (disparo, cañon3.transform.position, Quaternion.identity);
+				Instantiate (disparo, cañon2.transform.position, Quaternion.identity);
+			} else if (canonCount == 4) {
 				Instantiate (disparo, cañon3.transform.position, Quaternion.identity);
 				Instantiate (disparo, cañon2.transform.position, Quaternion.identity);
 				Instantiate (disparo, cañon1.transform.position, Quaternion.Euler(Quaternion.identity.x,Quaternion.identity.y,5));
 				Instantiate (disparo, cañon.transform.position, Quaternion.Euler(Quaternion.identity.x,Quaternion.identity.y,-5));
-		}
-		
+			}
+		}	
 	}
+	//activar disparo
+	public void startShooting(bool isPresed){
+		disparando = isPresed;
+	}
+
 	public void AoeReady(){
 		aoeReady = true;
 		aoeButton.SetActive (aoeReady);
