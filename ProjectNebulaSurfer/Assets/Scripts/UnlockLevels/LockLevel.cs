@@ -5,7 +5,7 @@ public class LockLevel : MonoBehaviour {
 	
 	
 	public static int worlds = 1; //number of worlds
-	public static int levels = 4; //number of levels
+	public static int levels = 5; //number of levels
 	
 	private int worldIndex;   
 	private int levelIndex;   
